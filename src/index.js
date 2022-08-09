@@ -10,7 +10,12 @@ const refs = {
 };
 
 function onCountriesInput(e) {
-    const country = e.currentTarget.value;
+    const c = e.currentTarget.value;
+    const country = c.trim()
+    if (country === "") {
+        console.log(country);
+        return;
+    }
     console.log(e.currentTarget.value);
     fetchCountries(country)
     .then((countries) => renderCountriesList(countries))
@@ -18,12 +23,12 @@ function onCountriesInput(e) {
 }
 
 function fetchCountries(countryName) {
-  return fetch(
-    `https://restcountries.com/v3.1/name/${countryName}`
-  ).then((response) => {
-    if (!response.ok) {
-        Notify.failure("Oops, there is no country with that name");
-    }
+    return fetch(
+        `https://restcountries.com/v3.1/name/${countryName}`
+    ).then((response) => {
+         if (!response.ok) {
+            Notify.failure("Oops, there is no country with that name");
+        }
     return response.json();
   });
 }
@@ -40,8 +45,8 @@ function renderCountriesList(countries) {
             <p>
                 <span><img 
                     src="${country.flags.svg}"
-                    width="15px", 
-                    height="10px" 
+                    width="20px", 
+                    height="15px" 
                 </span>
                 ${country.name.official}
             </p>
@@ -50,7 +55,7 @@ function renderCountriesList(countries) {
             })
             .join("");
         refs.countryList.innerHTML = markup;
-    } else if (countries.length > 1 ) {
+    } else if (countries.length === 1 ) {
         const markup = countries
             .map((country) => {
                 return `
@@ -58,15 +63,15 @@ function renderCountriesList(countries) {
             <p>
                 <span><img 
                     src="${country.flags.svg}"
-                    width="15px", 
-                    height="10px" 
+                    width="20px", 
+                    height="15px" 
                 </span>
                 ${country.name.official}
             </p>
             <p>
-            <b>Capital: ${country.capital}</b>
-            <b>Population: ${country.population}</b>
-            <b>Languages: ${country.languages}</b>
+            <b>Capital:</b> ${country.capital}<br>
+            <b>Population:</b> ${country.population}<br>
+            <b>Languages:</b> ${Object.values(country.languages)}</b>
             </p>
           </li>
       `;
@@ -80,5 +85,5 @@ function renderCountriesList(countries) {
     console.log(countries)
 };
 
-// refs.input.addEventListener("input", debounce(onCountriesInput, DEBOUNCE_DELAY));
-refs.input.addEventListener("input", onCountriesInput);
+refs.input.addEventListener("input", debounce(onCountriesInput, DEBOUNCE_DELAY));
+// refs.input.addEventListener("input", onCountriesInput);
