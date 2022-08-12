@@ -1,5 +1,5 @@
 import './css/styles.css';
-var  debounce  = require ('lodash.debounce') 
+import debounce from 'lodash.debounce';
 const DEBOUNCE_DELAY = 300;
 import { Notify } from 'notiflix/build/notiflix-notify-aio'
 
@@ -10,13 +10,13 @@ const refs = {
 };
 
 function onCountriesInput(e) {
-    const c = e.currentTarget.value;
+    const c = e.target.value;
     const country = c.trim()
     if (country === "") {
         console.log(country);
         return;
     }
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     fetchCountries(country)
     .then((countries) => renderCountriesList(countries))
     .catch((error) => console.log(error));
