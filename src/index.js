@@ -16,7 +16,6 @@ function onCountriesInput(e) {
         console.log(country);
         return;
     }
-    // console.log(e.currentTarget.value);
     fetchCountries(country)
     .then((countries) => renderCountriesList(countries))
     .catch((error) => console.log(error));
@@ -86,4 +85,3 @@ function renderCountriesList(countries) {
 };
 
 refs.input.addEventListener("input", debounce(onCountriesInput, DEBOUNCE_DELAY));
-// refs.input.addEventListener("input", onCountriesInput);
