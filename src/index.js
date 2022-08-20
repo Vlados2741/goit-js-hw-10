@@ -14,6 +14,7 @@ function onCountriesInput(e) {
     const country = c.trim()
     if (country === "") {
         console.log(country);
+        refs.countryList.innerHTML = "";
         return;
     }
     fetchCountries(country)
